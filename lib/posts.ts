@@ -39,7 +39,13 @@ export function getPost(slug: string) {
     toc.push({ id, text });
     return `<h2 id="${id}">${inner}</h2>`;
   });
-  return { meta: { slug, ...(data as Omit<PostMeta, "slug">) }, html, toc, words: content.split(/\s+/).length };
+  // Question headings ("## 1. What is X?") + their first paragraph become FAQ structured data.
+  const faq: { q: string; a: string }[] = [];
+  for (const m of content.matchAll(/^## (?:\d+\.\s*)?(.+\?)\s*\n+([^\n#`][^\n]*)/gm)) {
+    const a = m[2].replace(/`([^`]+)`/g, "$1").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*/g, "");
+    faq.push({ q: m[1].trim(), a });
+  }
+  return { meta: { slug, ...(data as Omit<PostMeta, "slug">) }, html, toc, faq, words: content.split(/\s+/).length };
 }
 
 export function getCategories() {

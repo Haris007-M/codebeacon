@@ -23,7 +23,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
     alternates: { canonical: `/blog/${params.slug}` },
     keywords: [category, `${category} interview questions`, `${category} interview questions and answers`, "frontend interview", title],
     authors: [{ name: SITE_NAME, url: SITE_URL }],
-    openGraph: { type: "article", title, description, publishedTime: date, modifiedTime: date, section: category, url: `/blog/${params.slug}` },
+    openGraph: { type: "article", title, description, publishedTime: date, modifiedTime: date, section: category, tags: [category, "interview questions"], url: `/blog/${params.slug}` },
     twitter: { card: "summary_large_image", title, description },
   };
 }
@@ -31,7 +31,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 export default function PostPage({ params }: { params: { slug: string } }) {
   const post = getPost(params.slug);
   if (!post) notFound();
-  const { meta, html, toc, words } = post;
+  const { meta, html, toc, faq, words } = post;
   const url = `${SITE_URL}/blog/${meta.slug}`;
   const related = getAllPosts().filter((p) => p.slug !== meta.slug).sort((a, b) => Number(b.category === meta.category) - Number(a.category === meta.category)).slice(0, 2);
   return (
@@ -45,6 +45,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
             { "@type": "ListItem", position: 3, name: meta.title, item: url },
           ] },
+          ...(faq.length >= 3 ? [{ "@type": "FAQPage", mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) }] : []),
         ],
       }} />
       <header className="relative overflow-hidden bg-ink text-sea">
