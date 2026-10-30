@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import { ChevronDown } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
+import { AdsterraResponsive, AdsterraRect, AdsterraTower } from "@/components/Adsterra";
 
 export const metadata: Metadata = pageMeta({ title: "FAQ", description: "Answers to common questions about CodeBeacon and frontend interview preparation.", path: "/faq", image: "/images/banners/faq.webp" });
 
@@ -31,6 +32,7 @@ export default function Faq() {
             <p className="mt-3 font-body text-ink/80">{a}</p>
           </details>
         ))}
+        <AdsterraResponsive className="!mt-16" />
       </div>
     </>
   );

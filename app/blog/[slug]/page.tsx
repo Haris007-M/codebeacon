@@ -8,7 +8,7 @@ import { artKey } from "@/components/Art";
 import JsonLd from "@/components/JsonLd";
 import PostCard from "@/components/PostCard";
 import AdSlot from "@/components/AdSlot";
-import { AdsterraBanner, AdsterraNative } from "@/components/Adsterra";
+import { AdsterraBanner, AdsterraNative, AdsterraRect } from "@/components/Adsterra";
 import { AD_SLOTS } from "@/lib/ads";
 import { getAllPosts, getPost, slugify } from "@/lib/posts";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
@@ -85,6 +85,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           </section>
         )}
         <AdSlot slot={AD_SLOTS.postBottom} />
+        <AdsterraRect />
         <AdsterraNative />
         <Banner title="Keep practicing" text="Follow the topic-by-topic checklist and turn what you read into interview-ready answers." href="/interview-prep" cta="Open interview prep" />
         <h2 className="text-2xl font-bold">Keep reading</h2>

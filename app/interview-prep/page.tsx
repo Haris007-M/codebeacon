@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Code2, Layers, Braces, Palette, Clapperboard, GitBranch, Check } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
+import { AdsterraResponsive, AdsterraRect, AdsterraTower } from "@/components/Adsterra";
 
 export const metadata: Metadata = pageMeta({ title: "Interview Prep", description: "A topic-by-topic checklist for React, Next.js, JavaScript, Tailwind CSS, animation and Git interviews.", path: "/interview-prep", image: "/images/banners/prep.webp" });
 
@@ -35,6 +36,7 @@ export default function InterviewPrep() {
       </Reveal>
       <div className="mx-auto max-w-6xl px-6">
         <Link href="/blog" className="inline-flex rounded-full bg-ink px-6 py-3 font-semibold text-sea hover:bg-teal">Read the articles</Link>
+        <AdsterraResponsive className="!mt-20" />
       </div>
     </>
   );

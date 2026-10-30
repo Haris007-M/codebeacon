@@ -6,6 +6,7 @@ import PageHeader from "@/components/PageHeader";
 import PostCard from "@/components/PostCard";
 import Banner from "@/components/Banner";
 import JsonLd from "@/components/JsonLd";
+import { AdsterraResponsive, AdsterraRect, AdsterraTower } from "@/components/Adsterra";
 import { getAllPosts, getCategories } from "@/lib/posts";
 import { SITE_URL } from "@/lib/site";
 
@@ -28,6 +29,7 @@ export default function Topic({ params }: { params: { topic: string } }) {
       <PageHeader art={artKey(c.name)} title={`${c.name} interview questions`} intro={`${c.count} ${c.count === 1 ? "article" : "articles"} with answers and code examples.`} />
       <div className="mx-auto max-w-6xl px-5 py-12">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">{posts.map((p) => <PostCard key={p.slug} post={p} />)}</div>
+        <AdsterraResponsive />
         <Banner title="Explore more topics" text="See every technology we cover and pick what to study next." href="/topics" cta="All topics" />
       </div>
     </>
