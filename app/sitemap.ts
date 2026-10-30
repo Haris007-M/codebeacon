@@ -4,8 +4,8 @@ import { SITE_URL } from "@/lib/site";
 import { artKey } from "@/components/Art";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ["", "/blog", "/topics", "/interview-prep", "/faq", "/about", "/contact", "/privacy-policy"];
-  const banner: Record<string, string> = { "/blog": "blog", "/topics": "topics", "/interview-prep": "prep", "/faq": "faq", "/about": "about", "/contact": "contact", "/privacy-policy": "privacy" };
+  const pages = ["", "/blog", "/topics", "/interview-prep", "/services", "/faq", "/about", "/contact", "/privacy-policy"];
+  const banner: Record<string, string> = { "/blog": "blog", "/topics": "topics", "/interview-prep": "prep", "/services": "about", "/faq": "faq", "/about": "about", "/contact": "contact", "/privacy-policy": "privacy" };
   return [
     ...pages.map((p) => ({ url: SITE_URL + p, lastModified: new Date(), changeFrequency: "weekly" as const, priority: p === "" ? 1 : 0.7, images: banner[p] ? [`${SITE_URL}/images/banners/${banner[p]}.webp`] : [] })),
     ...getCategories().map((c) => ({ url: `${SITE_URL}/topics/${c.slug}`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.7, images: [`${SITE_URL}/images/banners/${artKey(c.name)}.webp`] })),

@@ -5,7 +5,7 @@ import { getCategories } from "@/lib/posts";
 import { EMAIL } from "@/lib/site";
 
 const explore = [["Blog", "/blog"], ["Interview Prep", "/interview-prep"], ["All Topics", "/topics"], ["FAQ", "/faq"]];
-const company = [["About", "/about"], ["Contact", "/contact"], ["Privacy Policy", "/privacy-policy"]];
+const company = [["Services", "/services"], ["About", "/about"], ["Contact", "/contact"], ["Privacy Policy", "/privacy-policy"]];
 const col = "flex flex-col gap-2.5 text-sm text-sea/75";
 
 export default function Footer() {

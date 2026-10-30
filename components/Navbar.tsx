@@ -10,6 +10,7 @@ const links = [
   { href: "/topics", label: "Topics" },
   { href: "/interview-prep", label: "Interview Prep" },
   { href: "/faq", label: "FAQ" },
+  { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
