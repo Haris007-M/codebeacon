@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+body { @apply bg-sea text-ink font-display antialiased; }
+:focus-visible { outline: 3px solid #FFB020; outline-offset: 3px; }
+
+.prose-post { @apply font-body text-[1.1rem] leading-[1.8] text-ink/90 max-w-[68ch]; }
+.prose-post h2 { @apply font-display text-2xl font-bold mt-12 mb-3 text-ink; }
+.prose-post h3 { @apply font-display text-xl font-semibold mt-8 mb-2 text-ink; }
+.prose-post p { @apply my-5; }
+.prose-post ul { @apply list-disc pl-6 my-5 space-y-2; }
+.prose-post a { @apply text-teal underline underline-offset-4; }
+.prose-post code { @apply bg-ink/10 rounded px-1.5 py-0.5 text-[0.9em]; }
+.prose-post pre { @apply bg-ink text-sea rounded-xl p-5 overflow-x-auto my-6 text-sm leading-relaxed; }
+.prose-post pre code { @apply bg-transparent p-0; }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Hero scene animations (pure CSS, no JS needed) */
+@keyframes twinkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+@keyframes sweep { from { transform: scaleX(1); } to { transform: scaleX(-1); } }
+@keyframes drift { to { transform: translateX(-50%); } }
+@keyframes typing { from { width: 0; } to { width: calc(var(--n) * 1ch); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes glow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.6); } }
+
+.star { animation: twinkle 3.2s ease-in-out infinite; }
+.beam-sweep { transform-origin: 100px 92px; animation: sweep 5s linear infinite alternate; }
+.lamp { animation: glow 2.5s ease-in-out infinite; }
+.wave { animation: drift 12s linear infinite; }
+.float-card { animation: bob 6s ease-in-out infinite; }
+.type { width: 0; overflow: hidden; white-space: pre; animation: typing 1s steps(24, end) forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .star, .beam-sweep, .lamp, .wave, .float-card { animation: none; }
+  .type { animation: none; width: calc(var(--n) * 1ch); }
+}
+
+/* Thin, branded scrollbar */
+html { scrollbar-width: thin; scrollbar-color: #0F766E transparent; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#0F766E, #FFB020); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #0F766E; }
+
+/* Mobile app feel */
+body { -webkit-tap-highlight-color: transparent; overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); }
+a, button, summary { touch-action: manipulation; }
+@media (max-width: 640px) { .prose-post { font-size: 1.05rem; line-height: 1.75; } }
+
+.prose-post h2 { scroll-margin-top: 6rem; }
