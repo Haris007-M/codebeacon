@@ -7,6 +7,8 @@ import Cover from "@/components/Cover";
 import { artKey } from "@/components/Art";
 import JsonLd from "@/components/JsonLd";
 import PostCard from "@/components/PostCard";
+import AdSlot from "@/components/AdSlot";
+import { AD_SLOTS } from "@/lib/ads";
 import { getAllPosts, getPost, slugify } from "@/lib/posts";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
 
@@ -65,6 +67,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             </ol>
           </nav>
         )}
+        <AdSlot slot={AD_SLOTS.postTop} />
         <div className="prose-post" dangerouslySetInnerHTML={{ __html: html }} />
         {meta.links && meta.links.length > 0 && (
           <section className="mt-14 rounded-3xl border border-mist bg-white p-6">
@@ -77,6 +80,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             </ul>
           </section>
         )}
+        <AdSlot slot={AD_SLOTS.postBottom} />
         <Banner title="Keep practicing" text="Follow the topic-by-topic checklist and turn what you read into interview-ready answers." href="/interview-prep" cta="Open interview prep" />
         <h2 className="text-2xl font-bold">Keep reading</h2>
         <div className="mt-6 grid gap-6 sm:grid-cols-2">{related.map((p) => <PostCard key={p.slug} post={p} />)}</div>
