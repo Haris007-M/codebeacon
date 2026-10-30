@@ -4,8 +4,8 @@ import Logo from "@/components/Logo";
 import { getCategories } from "@/lib/posts";
 import { EMAIL } from "@/lib/site";
 
-const explore = [["Blog", "/blog"], ["Interview Prep", "/interview-prep"], ["All Topics", "/topics"], ["FAQ", "/faq"]];
-const company = [["Services", "/services"], ["About", "/about"], ["Contact", "/contact"], ["Privacy Policy", "/privacy-policy"]];
+const explore = [["Home", "/"], ["Blog", "/blog"], ["Interview Prep", "/interview-prep"], ["FAQ", "/faq"]];
+const company = [["Services", "/services"], ["Careers", "/careers"], ["About", "/about"], ["Contact", "/contact"], ["Privacy Policy", "/privacy-policy"]];
 const col = "flex flex-col gap-2.5 text-sm text-sea/75";
 
 export default function Footer() {
@@ -22,7 +22,7 @@ export default function Footer() {
           <a href={`mailto:${EMAIL}`} className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-medium transition hover:bg-white/10"><Mail size={16} /> {EMAIL}</a>
         </div>
         <div><h2 className="mb-4 font-bold">Explore</h2><div className={col}>{explore.map(([l, h]) => <Link key={h} href={h} className="hover:text-beam">{l}</Link>)}</div></div>
-        <div><h2 className="mb-4 font-bold">Topics</h2><div className={col}>{cats.map((c) => <Link key={c.slug} href={`/topics/${c.slug}`} className="hover:text-beam">{c.name}</Link>)}</div></div>
+        <div><h2 className="mb-4 font-bold">Topics</h2><div className={col}>{cats.map((c) => <Link key={c.slug} href={`/blog?topic=${c.slug}`} className="hover:text-beam">{c.name}</Link>)}</div></div>
         <div><h2 className="mb-4 font-bold">Company</h2><div className={col}>{company.map(([l, h]) => <Link key={h} href={h} className="hover:text-beam">{l}</Link>)}</div></div>
       </div>
       <div className="relative border-t border-white/10">

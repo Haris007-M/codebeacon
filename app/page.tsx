@@ -13,7 +13,7 @@ const topics = [
 ];
 const path = [
   { title: "Learn the fundamentals", text: "HTML, CSS, JavaScript and Git come first. Weak basics cost the most points.", href: "/blog/frontend-developer-interview-roadmap", cta: "Read the roadmap" },
-  { title: "Master your framework", text: "React, Next.js and TypeScript: rendering, hooks, data fetching and types.", href: "/topics/react", cta: "Browse React" },
+  { title: "Master your framework", text: "React, Next.js and TypeScript: rendering, hooks, data fetching and types.", href: "/blog?topic=react", cta: "Browse React" },
   { title: "Practice out loud", text: "Answer each question in your own words, then check it against the article.", href: "/interview-prep", cta: "Use the checklist" },
 ];
 const why = [
@@ -37,7 +37,7 @@ export default function Home() {
         <h2 className="text-3xl font-bold">Browse by topic</h2>
         <Reveal className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
           {topics.map(({ name, icon: Icon }) => (
-            <Link key={name} href={`/topics/${slugify(name)}`} className="group rounded-3xl bg-ink p-5 text-sea transition active:scale-[0.98] hover:bg-teal">
+            <Link key={name} href={`/blog?topic=${slugify(name)}`} className="group rounded-3xl bg-ink p-5 text-sea transition active:scale-[0.98] hover:bg-teal">
               <Icon className="text-beam group-hover:text-white" size={28} />
               <h3 className="mt-4 text-lg font-bold">{name}</h3>
               <p className="mt-1 text-sm text-sea/70">Questions and answers</p>

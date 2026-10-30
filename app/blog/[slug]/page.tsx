@@ -54,7 +54,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/70 to-transparent" />
         <div className="relative mx-auto max-w-3xl px-5 py-14 md:py-24">
           <nav aria-label="Breadcrumb" className="text-sm text-sea/70">
-            <Link href="/" className="hover:text-beam">Home</Link> / <Link href="/blog" className="hover:text-beam">Blog</Link> / <Link href={`/topics/${slugify(meta.category)}`} className="hover:text-beam">{meta.category}</Link>
+            <Link href="/" className="hover:text-beam">Home</Link> / <Link href="/blog" className="hover:text-beam">Blog</Link> / <Link href={`/blog?topic=${slugify(meta.category)}`} className="hover:text-beam">{meta.category}</Link>
           </nav>
           <h1 className="mt-4 text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl">{meta.title}</h1>
           <p className="mt-4 text-sea/75"><time dateTime={meta.date}>{new Date(meta.date).toLocaleDateString("en-US", { dateStyle: "long" })}</time> · {meta.readTime}</p>
