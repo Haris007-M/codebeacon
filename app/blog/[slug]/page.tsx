@@ -8,7 +8,7 @@ import { artKey } from "@/components/Art";
 import JsonLd from "@/components/JsonLd";
 import PostCard from "@/components/PostCard";
 import AdSlot from "@/components/AdSlot";
-import { AdsterraBanner, AdsterraNative, ADSTERRA } from "@/components/Adsterra";
+import { AdsterraBanner, AdsterraNative } from "@/components/Adsterra";
 import { AD_SLOTS } from "@/lib/ads";
 import { getAllPosts, getPost, slugify } from "@/lib/posts";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
@@ -60,7 +60,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           <p className="mt-4 text-sea/75"><time dateTime={meta.date}>{new Date(meta.date).toLocaleDateString("en-US", { dateStyle: "long" })}</time> · {meta.readTime}</p>
         </div>
       </header>
-      <aside className="fixed right-6 top-32 z-10 hidden 2xl:block"><AdsterraBanner adKey={ADSTERRA.banner160} width={160} height={300} /></aside>
+      <aside className="fixed right-6 top-32 z-10 hidden 2xl:block"><AdsterraBanner unit="banner160" /></aside>
       <article className="mx-auto max-w-3xl px-5 py-12">
         {toc.length > 2 && (
           <nav aria-label="Table of contents" className="mb-10 rounded-3xl border border-mist bg-white p-6">
@@ -71,7 +71,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           </nav>
         )}
         <AdSlot slot={AD_SLOTS.postTop} />
-        <AdsterraBanner adKey={ADSTERRA.banner468} width={468} height={60} className="mb-10 hidden sm:flex" />
+        <AdsterraBanner unit="banner468" className="mb-10 hidden sm:flex" />
         <div className="prose-post" dangerouslySetInnerHTML={{ __html: html }} />
         {meta.links && meta.links.length > 0 && (
           <section className="mt-14 rounded-3xl border border-mist bg-white p-6">

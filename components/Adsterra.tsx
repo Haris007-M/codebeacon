@@ -5,7 +5,7 @@ import Script from "next/script";
 
 // Adsterra ad units. Keys come from your Adsterra dashboard (Websites > Get code).
 const HOST = "https://bauval.org";
-export const ADSTERRA = {
+const ADSTERRA = {
   banner468: "8cafc0ce54a58ae0310bd4b94d1a1279",   // 468x60
   banner160: "9098143e63e185d9b9a9a2bde9c040b3",   // 160x300
   native: "c9f368de7cce7810b2db6d8da3480ba0",      // native banner
@@ -13,8 +13,12 @@ export const ADSTERRA = {
 };
 
 /** iframe banner. Each one runs in its own iframe so several can sit on one page without clashing. */
-export function AdsterraBanner({ adKey, width, height, className = "" }: { adKey: string; width: number; height: number; className?: string }) {
+const SIZES = { banner468: [468, 60], banner160: [160, 300] } as const;
+
+export function AdsterraBanner({ unit, className = "" }: { unit: keyof typeof SIZES; className?: string }) {
   const path = usePathname();
+  const adKey = ADSTERRA[unit];
+  const [width, height] = SIZES[unit];
   const html = `<!doctype html><html><head><style>html,body{margin:0;padding:0;overflow:hidden}</style></head><body>
 <script>atOptions={key:'${adKey}',format:'iframe',height:${height},width:${width},params:{}};</script>
 <script src="${HOST}/22/${adKey}"></script></body></html>`;
