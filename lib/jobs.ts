@@ -1,5 +1,5 @@
-// Careers data. These are PLACEHOLDER jobs. Replace them with real openings before going live.
-// To add a job, copy one object, give it a unique slug and edit the fields.
+// Careers data: the positions CodeBeacon is hiring for.
+// To add a job, copy one object, give it a unique slug and edit the fields. To close a role, delete its object.
 
 export type Workplace = "Remote" | "On-site" | "Hybrid";
 export type JobType = "Full-time" | "Part-time" | "Contract" | "Internship";
@@ -39,7 +39,7 @@ export const JOBS: Job[] = [
     type: "Full-time",
     location: "Anywhere",
     experience: "2+ years",
-    posted: "2026-10-28",
+    posted: "2026-10-31",
     summary: "Build fast, accessible interfaces in React and TypeScript for our learning platform.",
     about: "You will work with designers and backend developers to turn designs into clean, reusable React components. You care about performance, accessibility and code that other developers enjoy reading.",
     responsibilities: [
@@ -66,7 +66,7 @@ export const JOBS: Job[] = [
     type: "Full-time",
     location: "Lahore, Pakistan",
     experience: "1–3 years",
-    posted: "2026-10-26",
+    posted: "2026-10-31",
     summary: "Write clean, modern JavaScript for interactive features, tools and code examples.",
     about: "You will build interactive features across the site, such as quizzes and code playgrounds, and help keep our code examples correct and easy to follow.",
     responsibilities: [
@@ -92,7 +92,7 @@ export const JOBS: Job[] = [
     type: "Full-time",
     location: "Lahore, Pakistan",
     experience: "2+ years",
-    posted: "2026-10-24",
+    posted: "2026-10-31",
     summary: "Craft responsive, polished interfaces with Next.js, Tailwind CSS and smooth animations.",
     about: "You will own the look and feel of our pages, from layout and typography to animation, making sure everything works on every screen size.",
     responsibilities: [
@@ -118,7 +118,7 @@ export const JOBS: Job[] = [
     type: "Full-time",
     location: "Lahore, Pakistan",
     experience: "3+ years",
-    posted: "2026-10-22",
+    posted: "2026-10-31",
     summary: "Ship features end to end with Next.js, Node.js and a SQL or NoSQL database.",
     about: "You will design APIs, build interfaces and deploy features from start to finish. You are comfortable moving between the frontend, the backend and the database.",
     responsibilities: [
@@ -144,7 +144,7 @@ export const JOBS: Job[] = [
     type: "Contract",
     location: "Anywhere",
     experience: "2+ years",
-    posted: "2026-10-20",
+    posted: "2026-10-31",
     summary: "Build SEO-friendly pages with the Next.js App Router, server components and static generation.",
     about: "You will help us grow the site with fast, search-friendly pages, using the App Router, metadata APIs and the right rendering strategy for each page.",
     responsibilities: [
@@ -169,7 +169,7 @@ export const JOBS: Job[] = [
     type: "Part-time",
     location: "Anywhere",
     experience: "1+ years",
-    posted: "2026-10-27",
+    posted: "2026-10-31",
     summary: "Write clear interview guides and tutorials about React, JavaScript and web development.",
     about: "You will write and update blog articles that help developers prepare for interviews. You can explain technical ideas simply and back them with working code.",
     responsibilities: [
@@ -194,7 +194,7 @@ export const JOBS: Job[] = [
     type: "Full-time",
     location: "Lahore, Pakistan",
     experience: "2+ years",
-    posted: "2026-10-25",
+    posted: "2026-10-31",
     summary: "Grow organic traffic with keyword research, technical SEO and content strategy.",
     about: "You will plan what we write, make sure search engines understand our pages and track how our traffic grows.",
     responsibilities: [
@@ -219,7 +219,7 @@ export const JOBS: Job[] = [
     type: "Full-time",
     location: "Lahore, Pakistan",
     experience: "2+ years",
-    posted: "2026-10-18",
+    posted: "2026-10-31",
     summary: "Design simple, accessible user experiences for web pages and learning tools.",
     about: "You will design new pages and features, build our design system and test ideas with real users.",
     responsibilities: [
@@ -244,7 +244,7 @@ export const JOBS: Job[] = [
     type: "Internship",
     location: "Lahore, Pakistan",
     experience: "Fresh graduates",
-    posted: "2026-10-29",
+    posted: "2026-10-31",
     summary: "Learn by building real features with HTML, CSS, JavaScript and React alongside senior developers.",
     about: "A three-month internship for students and fresh graduates who want hands-on experience. You will be paired with a mentor and work on real tasks.",
     responsibilities: [

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { FileText, Loader2, Send, Upload, X } from "lucide-react";
 import { EMAIL } from "@/lib/site";
 
-// Optional: set NEXT_PUBLIC_CAREERS_ENDPOINT (e.g. a Formspree URL) to receive applications by email.
+// Required: set NEXT_PUBLIC_CAREERS_ENDPOINT (e.g. a Formspree URL) in Vercel to receive applications by email.
 const ENDPOINT = process.env.NEXT_PUBLIC_CAREERS_ENDPOINT || process.env.NEXT_PUBLIC_FORM_ENDPOINT;
 const field = "mt-1.5 w-full rounded-xl border border-mist bg-white px-4 py-3 text-base outline-none transition placeholder:text-ink/35 focus:border-teal focus:ring-2 focus:ring-teal/30";
 const label = "block text-sm font-medium text-ink";
@@ -39,7 +39,7 @@ export default function ApplyForm({ slug, title }: { slug: string; title: string
         const res = await fetch(ENDPOINT, { method: "POST", headers: { Accept: "application/json" }, body: data });
         if (!res.ok) throw new Error("failed");
       } else {
-        await new Promise((r) => setTimeout(r, 900)); // demo mode: no endpoint configured yet
+        throw new Error("no endpoint"); // never pretend an application was sent: show the email fallback instead
       }
       router.push(`/careers/thank-you?job=${encodeURIComponent(slug)}`);
     } catch {
