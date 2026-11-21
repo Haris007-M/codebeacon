@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Briefcase, Building2, CalendarDays, CheckCircle2, GraduationCap, MapPin } from "lucide-react";
 import { pageMeta } from "@/lib/seo";
 import ApplyForm from "@/components/ApplyForm";
-import { AdsterraRect } from "@/components/Adsterra";
+import { AdsterraAnchor, AdsterraInline, AdsterraSideRail } from "@/components/Adsterra";
 import { JOBS, PERKS, getJob, postedOn, workplaceStyle } from "@/lib/jobs";
 
 export const generateStaticParams = () => JOBS.map((j) => ({ slug: j.slug }));
@@ -73,6 +73,7 @@ export default function JobPage({ params }: { params: { slug: string } }) {
             <p className="mt-3 font-body text-lg leading-relaxed text-ink/80">{job.about}</p>
           </section>
           <List title="What you will do" items={job.responsibilities} />
+          <AdsterraInline />
           <List title="What we are looking for" items={job.requirements} />
           <List title="Nice to have" items={job.niceToHave} />
 
@@ -89,21 +90,18 @@ export default function JobPage({ params }: { params: { slug: string } }) {
             <p className="mt-5 text-sm text-sea/60">Salary is competitive and based on experience. We discuss it with shortlisted candidates.</p>
           </section>
 
-          <section id="apply" className="mt-12 scroll-mt-24 rounded-3xl border border-mist bg-white p-5 sm:p-8">
-            <h2 className="text-2xl font-bold">Apply for {job.title}</h2>
-            <p className="mt-1 mb-6 text-ink/60">It takes about 3 minutes. Fields marked <span className="text-red-600">*</span> are required.</p>
+          <AdsterraInline className="!my-12" />
+
+          <section id="apply" className="scroll-mt-24 rounded-3xl border border-mist bg-white p-5 sm:p-8">
             <ApplyForm slug={job.slug} title={job.title} />
           </section>
+
+          <AdsterraInline className="!mt-12 !mb-0" />
         </article>
 
-        <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-3xl border border-mist bg-white p-6">
-            <h2 className="text-lg font-bold">Ready to apply?</h2>
-            <p className="mt-1 text-sm text-ink/60">Send your details and CV. We reply to every applicant.</p>
-            <a href="#apply" className="mt-4 flex w-full justify-center rounded-full bg-teal px-5 py-3 font-semibold text-white transition hover:brightness-110">Apply now</a>
-          </div>
+        <aside aria-label="Sidebar">
           {more.length > 0 && (
-            <div className="mt-5 rounded-3xl border border-mist bg-white p-6">
+            <div className="mb-5 rounded-3xl border border-mist bg-white p-6">
               <h2 className="text-lg font-bold">Similar roles</h2>
               <ul className="mt-3 divide-y divide-mist">
                 {more.map((j) => (
@@ -112,9 +110,18 @@ export default function JobPage({ params }: { params: { slug: string } }) {
               </ul>
             </div>
           )}
-          <div className="hidden lg:block"><AdsterraRect className="!my-6" /></div>
+          {/* This block follows the reader down the page, so the apply button and the ad stay in view. */}
+          <div className="lg:sticky lg:top-24">
+            <div className="rounded-3xl border border-mist bg-white p-6">
+              <h2 className="text-lg font-bold">Ready to apply?</h2>
+              <p className="mt-1 text-sm text-ink/60">Send your details and CV. We reply to every applicant.</p>
+              <a href="#apply" className="mt-4 flex w-full justify-center rounded-full bg-teal px-5 py-3 font-semibold text-white transition hover:brightness-110">Apply now</a>
+            </div>
+            <div className="mt-6"><AdsterraSideRail tower={false} /></div>
+          </div>
         </aside>
       </div>
+      <AdsterraAnchor />
     </>
   );
 }

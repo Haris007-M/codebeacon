@@ -69,6 +69,47 @@ export function AdsterraTower() {
   return <aside className="fixed right-4 top-28 z-10"><AdsterraBanner unit="tower160" /></aside>;
 }
 
+/** Sticky side column: 300x250 and, on tall screens, a 160x600 below it. Wrap it in `sticky top-24` so it follows the reader.
+ *  Only mounts (and only loads ads) on screens 1024px+ wide, so nothing is ever loaded in a hidden element. */
+export function AdsterraSideRail({ tower = true }: { tower?: boolean }) {
+  const desktop = useMedia("(min-width: 1024px)");
+  const tall = useMedia("(min-height: 1040px)");
+  if (!desktop) return null;
+  return (
+    <div className="flex flex-col items-center gap-6">
+      <AdsterraBanner unit="rect300" />
+      {tower && tall ? <AdsterraBanner unit="tower160" /> : null}
+    </div>
+  );
+}
+
+/** In-content ad: 468x60 on tablets/desktops, 300x250 on phones. Only the matching one is loaded. */
+export function AdsterraInline({ className = "" }: { className?: string }) {
+  const wide = useMedia("(min-width: 640px)");
+  return (
+    <div className={`my-10 flex justify-center ${wide === null ? "min-h-[90px]" : ""} ${className}`}>
+      {wide === null ? null : <AdsterraBanner unit={wide ? "banner468" : "rect300"} />}
+    </div>
+  );
+}
+
+/** Phone-only banner pinned to the bottom of the screen. Clearly labelled, with its own close button that sits
+ *  outside the ad, so it never covers page content or invites accidental clicks. */
+export function AdsterraAnchor() {
+  const phone = useMedia("(max-width: 799px)");
+  const [closed, setClosed] = useState(false);
+  if (!phone || closed) return null;
+  return (
+    <>
+      <div aria-hidden className="h-[88px]" />
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-mist bg-white pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_16px_rgba(11,31,51,0.10)]">
+        <button type="button" onClick={() => setClosed(true)} aria-label="Close advertisement" className="absolute -top-10 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-ink text-lg leading-none text-white shadow">×</button>
+        <AdsterraBanner unit="mobile320" className="py-1.5" />
+      </div>
+    </>
+  );
+}
+
 /** Native banner (matches site content). */
 export function AdsterraNative({ className = "" }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);

@@ -1,3 +1,6 @@
 node_modules
 .next
 next-env.d.ts
+
+# Career applications saved locally in dev mode (contain personal data)
+/applications

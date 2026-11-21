@@ -1,21 +1,26 @@
 "use client";
-import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { FileText, Loader2, Send, Upload, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { ArrowLeft, CheckCircle2, FileText, Loader2, Send, Upload, X } from "lucide-react";
 import { EMAIL } from "@/lib/site";
+import { AdsterraRect } from "@/components/Adsterra";
 
-// Required: set NEXT_PUBLIC_CAREERS_ENDPOINT (e.g. a Formspree URL) in Vercel to receive applications by email.
-const ENDPOINT = process.env.NEXT_PUBLIC_CAREERS_ENDPOINT || process.env.NEXT_PUBLIC_FORM_ENDPOINT;
 const field = "mt-1.5 w-full rounded-xl border border-mist bg-white px-4 py-3 text-base outline-none transition placeholder:text-ink/35 focus:border-teal focus:ring-2 focus:ring-teal/30";
 const label = "block text-sm font-medium text-ink";
-const MAX_MB = 5;
+const MAX_MB = 4;
 
 export default function ApplyForm({ slug, title }: { slug: string; title: string }) {
-  const router = useRouter();
-  const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  // After a successful submit, bring the thank-you message into view.
+  useEffect(() => {
+    if (status === "done") boxRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [status]);
 
   function pickFile(f: File | undefined) {
     setFileError("");
@@ -28,27 +33,47 @@ export default function ApplyForm({ slug, title }: { slug: string; title: string
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (status === "sending") return;
     if (!file) { setFileError("Please attach your résumé / CV."); return; }
     const data = new FormData(e.currentTarget);
     data.set("position", title);
-    data.set("_subject", `Job application: ${title}`);
+    data.set("job", slug);
+    setErrorMsg("");
     setStatus("sending");
     try {
-      if (ENDPOINT) {
-        // Sent as multipart/form-data so the CV file is included. The endpoint must accept file uploads.
-        const res = await fetch(ENDPOINT, { method: "POST", headers: { Accept: "application/json" }, body: data });
-        if (!res.ok) throw new Error("failed");
-      } else {
-        throw new Error("no endpoint"); // never pretend an application was sent: show the email fallback instead
-      }
-      router.push(`/careers/thank-you?job=${encodeURIComponent(slug)}`);
-    } catch {
+      const res = await fetch("/api/apply", { method: "POST", body: data });
+      const json = await res.json().catch(() => null);
+      if (!res.ok || !json?.ok) throw new Error(json?.error || "failed");
+      setStatus("done");
+    } catch (err) {
+      setErrorMsg(err instanceof Error && err.message !== "failed" && err.message !== "Failed to fetch" ? err.message : "");
       setStatus("error");
     }
   }
 
+  if (status === "done") {
+    return (
+      <div ref={boxRef} className="scroll-mt-24 text-center" role="status" aria-live="polite">
+        <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-teal shadow-lg shadow-teal/30"><CheckCircle2 size={34} className="text-white" /></span>
+        <h2 className="mt-5 text-2xl font-extrabold tracking-tight sm:text-3xl">Thank you for applying!</h2>
+        <p className="mx-auto mt-3 max-w-md text-ink/70">We have received your application for <strong>{title}</strong>. Our team reviews every application within 5–7 working days and will contact you by email.</p>
+        <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link href="/careers#open-roles" className="inline-flex items-center justify-center gap-2 rounded-full bg-teal px-6 py-3 font-semibold text-white transition hover:brightness-110"><ArrowLeft size={18} /> View other roles</Link>
+          <Link href="/blog" className="inline-flex items-center justify-center rounded-full border border-mist px-6 py-3 font-semibold transition hover:border-teal hover:text-teal">Read the blog</Link>
+        </div>
+        <div className="mt-10 border-t border-mist pt-2"><AdsterraRect className="!my-8" /></div>
+      </div>
+    );
+  }
+
   return (
+    <>
+    <h2 className="text-2xl font-bold">Apply for {title}</h2>
+    <p className="mt-1 mb-6 text-ink/60">It takes about 3 minutes. Fields marked <span className="text-red-600">*</span> are required.</p>
     <form onSubmit={onSubmit} className="space-y-5">
+      <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label>Leave this field empty<input name="company_website" tabIndex={-1} autoComplete="off" /></label>
+      </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <label className={label}>Full name <span className="text-red-600">*</span><input name="name" required autoComplete="name" placeholder="Your full name" className={field} /></label>
         <label className={label}>Email <span className="text-red-600">*</span><input name="email" type="email" required autoComplete="email" placeholder="you@example.com" className={field} /></label>
@@ -99,10 +124,11 @@ export default function ApplyForm({ slug, title }: { slug: string; title: string
         <input type="checkbox" name="consent" value="yes" required className="mt-0.5 h-5 w-5 shrink-0 rounded border-mist accent-teal" />
         <span>I agree that CodeBeacon may store my details to review this application, as described in the <a href="/privacy-policy" className="text-teal underline underline-offset-2">Privacy Policy</a>.</span>
       </label>
-      {status === "error" && <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">We could not send your application. Please try again or email it to {EMAIL}.</p>}
+      {status === "error" && <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{errorMsg || "We could not send your application."} Please try again or email it to <a href={`mailto:${EMAIL}`} className="font-semibold underline">{EMAIL}</a>.</p>}
       <button disabled={status === "sending"} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-teal px-6 py-3.5 font-semibold text-white shadow-lg shadow-teal/25 transition hover:brightness-110 active:scale-[0.99] disabled:opacity-60 sm:w-auto">
         {status === "sending" ? <><Loader2 size={18} className="animate-spin" /> Submitting…</> : <><Send size={18} /> Submit application</>}
       </button>
     </form>
+    </>
   );
 }

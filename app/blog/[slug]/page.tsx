@@ -8,10 +8,13 @@ import { artKey } from "@/components/Art";
 import JsonLd from "@/components/JsonLd";
 import PostCard from "@/components/PostCard";
 import AdSlot from "@/components/AdSlot";
-import { AdsterraBanner, AdsterraNative, AdsterraRect } from "@/components/Adsterra";
+import { AdsterraAnchor, AdsterraInline, AdsterraNative, AdsterraRect, AdsterraSideRail } from "@/components/Adsterra";
 import { AD_SLOTS } from "@/lib/ads";
 import { getAllPosts, getPost, slugify } from "@/lib/posts";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
+
+// Ads go after these sections (0-based) so readers see one every few screens while they scroll.
+const AD_AFTER_SECTION = new Set([1, 4, 7]);
 
 export const generateStaticParams = () => getAllPosts().map((p) => ({ slug: p.slug }));
 
@@ -35,6 +38,8 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   const { meta, html, toc, faq, words } = post;
   const url = `${SITE_URL}/blog/${meta.slug}`;
   const related = getAllPosts().filter((p) => p.slug !== meta.slug).sort((a, b) => Number(b.category === meta.category) - Number(a.category === meta.category)).slice(0, 2);
+  // Split the article at each <h2> so ads can sit between sections.
+  const sections = html.split(/(?=<h2 id=)/).filter((c) => c.trim());
   return (
     <>
       <JsonLd data={{
@@ -60,8 +65,8 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           <p className="mt-4 text-sea/75"><time dateTime={meta.date}>{new Date(meta.date).toLocaleDateString("en-US", { dateStyle: "long" })}</time> · {meta.readTime}</p>
         </div>
       </header>
-      <aside className="fixed right-6 top-32 z-10 hidden 2xl:block"><AdsterraBanner unit="banner160" /></aside>
-      <article className="mx-auto max-w-3xl px-5 py-12">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 lg:grid-cols-[minmax(0,1fr)_300px]">
+      <article className="min-w-0">
         {toc.length > 2 && (
           <nav aria-label="Table of contents" className="mb-10 rounded-3xl border border-mist bg-white p-6">
             <p className="font-bold">On this page</p>
@@ -71,8 +76,13 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           </nav>
         )}
         <AdSlot slot={AD_SLOTS.postTop} />
-        <AdsterraBanner unit="banner468" className="mb-10 hidden sm:flex" />
-        <div className="prose-post" dangerouslySetInnerHTML={{ __html: html }} />
+        <AdsterraInline className="!mt-0" />
+        {sections.map((chunk, i) => (
+          <div key={i}>
+            <div className="prose-post" dangerouslySetInnerHTML={{ __html: chunk }} />
+            {AD_AFTER_SECTION.has(i) && i < sections.length - 1 && <AdsterraInline />}
+          </div>
+        ))}
         {meta.links && meta.links.length > 0 && (
           <section className="mt-14 rounded-3xl border border-mist bg-white p-6">
             <h2 className="flex items-center gap-2 text-xl font-bold"><BookMarked size={20} className="text-teal" /> Related resources</h2>
@@ -91,6 +101,11 @@ export default function PostPage({ params }: { params: { slug: string } }) {
         <h2 className="text-2xl font-bold">Keep reading</h2>
         <div className="mt-6 grid gap-6 sm:grid-cols-2">{related.map((p) => <PostCard key={p.slug} post={p} />)}</div>
       </article>
+      <aside aria-label="Advertisements" className="hidden lg:block">
+        <div className="sticky top-24"><AdsterraSideRail /></div>
+      </aside>
+      </div>
+      <AdsterraAnchor />
     </>
   );
 }
