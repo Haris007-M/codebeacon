@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import Analytics from "@/components/Analytics";
-import { AdsterraPopunder } from "@/components/Adsterra";
+import { ADSENSE_CLIENT } from "@/lib/ads";
 import { SITE_URL, SITE_NAME, SITE_DESC } from "@/lib/site";
 
 const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display" });
@@ -29,7 +29,8 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   formatDetection: { telephone: false, email: false, address: false },
   referrer: "origin-when-cross-origin",
-  other: process.env.NEXT_PUBLIC_ADSENSE_CLIENT ? { "google-adsense-account": process.env.NEXT_PUBLIC_ADSENSE_CLIENT } : undefined,
+  // AdSense site-verification meta tag: <meta name="google-adsense-account" content="ca-pub-...">
+  other: { "google-adsense-account": ADSENSE_CLIENT },
   verification: { google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION, other: process.env.NEXT_PUBLIC_BING_VERIFICATION ? { "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION } : undefined },
 };
 
@@ -38,6 +39,10 @@ export const viewport: Viewport = { themeColor: "#0B1F33", width: "device-width"
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
+      <head>
+        {/* AdSense site code: plain <script> in <head> so Google can find it when it reviews the site. */}
+        {ADSENSE_CLIENT && <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`} crossOrigin="anonymous" />}
+      </head>
       <body>
         <JsonLd data={{
           "@context": "https://schema.org",
@@ -53,7 +58,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <Footer />
         <Analytics />
-        <AdsterraPopunder />
       </body>
     </html>
   );

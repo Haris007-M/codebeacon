@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import { ChevronDown } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
-import { AdsterraResponsive, AdsterraRect, AdsterraTower } from "@/components/Adsterra";
+import { AdsterraResponsive } from "@/components/Adsterra";
 
 export const metadata: Metadata = pageMeta({ title: "FAQ", description: "Answers to common questions about CodeBeacon and frontend interview preparation.", path: "/faq", image: "/images/banners/faq.webp" });
 
@@ -13,7 +13,7 @@ const faqs = [
   ["Who is it for?", "Beginners preparing for a first role through to experienced developers refreshing the fundamentals."],
   ["How often is new content added?", "We publish new articles regularly and update older ones when frameworks change."],
   ["How should I use the articles?", "Read the short answer first, say it out loud in your own words, then read the detail. Then try building a small example."],
-  ["Do you collect my personal data?", "We do not ask for or store personal details through the site. See the Privacy Policy for how analytics and advertising cookies work."],
+  ["Do you collect my personal data?", "Only what you choose to send us through the contact and job application forms. Reading the site does not require an account. See the Privacy Policy for how analytics and advertising cookies work."],
   ["I found a mistake. What should I do?", "Please email us from the Contact page and we will correct it."],
 ];
 

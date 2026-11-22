@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Mail, MessagesSquare, Search } from "lucide-react";
-import { AdsterraResponsive } from "@/components/Adsterra";
 import { getJob } from "@/lib/jobs";
 
 export const metadata: Metadata = { title: "Application received", robots: { index: false, follow: true } };
@@ -45,8 +44,6 @@ export default function ThankYou({ searchParams }: { searchParams: { job?: strin
           </li>
         ))}
       </ol>
-
-      <AdsterraResponsive />
     </div>
   );
 }

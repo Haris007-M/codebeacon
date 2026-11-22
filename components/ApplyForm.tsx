@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, FileText, Loader2, Send, Upload, X } from "lucide-react";
 import { EMAIL } from "@/lib/site";
-import { AdsterraRect } from "@/components/Adsterra";
 
 const field = "mt-1.5 w-full rounded-xl border border-mist bg-white px-4 py-3 text-base outline-none transition placeholder:text-ink/35 focus:border-teal focus:ring-2 focus:ring-teal/30";
 const label = "block text-sm font-medium text-ink";
@@ -61,7 +60,6 @@ export default function ApplyForm({ slug, title }: { slug: string; title: string
           <Link href="/careers#open-roles" className="inline-flex items-center justify-center gap-2 rounded-full bg-teal px-6 py-3 font-semibold text-white transition hover:brightness-110"><ArrowLeft size={18} /> View other roles</Link>
           <Link href="/blog" className="inline-flex items-center justify-center rounded-full border border-mist px-6 py-3 font-semibold transition hover:border-teal hover:text-teal">Read the blog</Link>
         </div>
-        <div className="mt-10 border-t border-mist pt-2"><AdsterraRect className="!my-8" /></div>
       </div>
     );
   }

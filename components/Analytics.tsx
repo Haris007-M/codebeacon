@@ -1,8 +1,8 @@
 import Script from "next/script";
 
-// Google Analytics 4 + Google AdSense loader. Both are off unless their env vars are set.
+// Google Analytics 4. Off unless NEXT_PUBLIC_GA_ID is set.
+// (The AdSense code is added in app/layout.tsx so it is in the page <head> where Google looks for it.)
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID; // e.g. G-XXXXXXXXXX
-const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT; // e.g. ca-pub-1234567890123456
 
 export default function Analytics() {
   return (
@@ -17,15 +17,6 @@ export default function Analytics() {
             gtag('config', '${GA_ID}');
           `}</Script>
         </>
-      )}
-      {ADSENSE_CLIENT && (
-        <Script
-          id="adsense"
-          async
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
-        />
       )}
     </>
   );

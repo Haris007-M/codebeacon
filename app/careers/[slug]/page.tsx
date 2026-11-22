@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Briefcase, Building2, CalendarDays, CheckCircle2, GraduationCap, MapPin } from "lucide-react";
 import { pageMeta } from "@/lib/seo";
 import ApplyForm from "@/components/ApplyForm";
-import { AdsterraAnchor, AdsterraInline, AdsterraSideRail } from "@/components/Adsterra";
+import { AdsterraInline } from "@/components/Adsterra";
 import { JOBS, PERKS, getJob, postedOn, workplaceStyle } from "@/lib/jobs";
 
 export const generateStaticParams = () => JOBS.map((j) => ({ slug: j.slug }));
@@ -90,13 +90,9 @@ export default function JobPage({ params }: { params: { slug: string } }) {
             <p className="mt-5 text-sm text-sea/60">Salary is competitive and based on experience. We discuss it with shortlisted candidates.</p>
           </section>
 
-          <AdsterraInline className="!my-12" />
-
           <section id="apply" className="scroll-mt-24 rounded-3xl border border-mist bg-white p-5 sm:p-8">
             <ApplyForm slug={job.slug} title={job.title} />
           </section>
-
-          <AdsterraInline className="!mt-12 !mb-0" />
         </article>
 
         <aside aria-label="Sidebar">
@@ -110,18 +106,16 @@ export default function JobPage({ params }: { params: { slug: string } }) {
               </ul>
             </div>
           )}
-          {/* This block follows the reader down the page, so the apply button and the ad stay in view. */}
+          {/* This block follows the reader down the page so the apply button stays in view. */}
           <div className="lg:sticky lg:top-24">
             <div className="rounded-3xl border border-mist bg-white p-6">
               <h2 className="text-lg font-bold">Ready to apply?</h2>
               <p className="mt-1 text-sm text-ink/60">Send your details and CV. We reply to every applicant.</p>
               <a href="#apply" className="mt-4 flex w-full justify-center rounded-full bg-teal px-5 py-3 font-semibold text-white transition hover:brightness-110">Apply now</a>
             </div>
-            <div className="mt-6"><AdsterraSideRail tower={false} /></div>
           </div>
         </aside>
       </div>
-      <AdsterraAnchor />
     </>
   );
 }

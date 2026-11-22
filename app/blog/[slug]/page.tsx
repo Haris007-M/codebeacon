@@ -8,13 +8,16 @@ import { artKey } from "@/components/Art";
 import JsonLd from "@/components/JsonLd";
 import PostCard from "@/components/PostCard";
 import AdSlot from "@/components/AdSlot";
-import { AdsterraAnchor, AdsterraInline, AdsterraNative, AdsterraRect, AdsterraSideRail } from "@/components/Adsterra";
+import { AdsterraResponsive } from "@/components/Adsterra";
 import { AD_SLOTS } from "@/lib/ads";
 import { getAllPosts, getPost, slugify } from "@/lib/posts";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
 
-// Ads go after these sections (0-based) so readers see one every few screens while they scroll.
-const AD_AFTER_SECTION = new Set([1, 4, 7]);
+// AdSense placement inside the article (0-based chunk index). The first ad comes after the intro,
+// the second only appears in longer articles so content always clearly outweighs ads.
+const AD_TOP_AFTER = 0;
+const AD_MID_AFTER = 3;
+const AD_MID_MIN_SECTIONS = 6;
 
 export const generateStaticParams = () => getAllPosts().map((p) => ({ slug: p.slug }));
 
@@ -75,12 +78,11 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             </ol>
           </nav>
         )}
-        <AdSlot slot={AD_SLOTS.postTop} />
-        <AdsterraInline className="!mt-0" />
         {sections.map((chunk, i) => (
           <div key={i}>
             <div className="prose-post" dangerouslySetInnerHTML={{ __html: chunk }} />
-            {AD_AFTER_SECTION.has(i) && i < sections.length - 1 && <AdsterraInline />}
+            {i === AD_TOP_AFTER && i < sections.length - 1 && <AdSlot slot={AD_SLOTS.postTop} />}
+            {i === AD_MID_AFTER && sections.length >= AD_MID_MIN_SECTIONS && <AdSlot slot={AD_SLOTS.postMid} />}
           </div>
         ))}
         {meta.links && meta.links.length > 0 && (
@@ -95,17 +97,16 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           </section>
         )}
         <AdSlot slot={AD_SLOTS.postBottom} />
-        <AdsterraRect />
-        <AdsterraNative />
+        {/* Footer banner from the second network (renders only when NEXT_PUBLIC_AD_MODE=live). */}
+        <AdsterraResponsive />
         <Banner title="Keep practicing" text="Follow the topic-by-topic checklist and turn what you read into interview-ready answers." href="/interview-prep" cta="Open interview prep" />
         <h2 className="text-2xl font-bold">Keep reading</h2>
         <div className="mt-6 grid gap-6 sm:grid-cols-2">{related.map((p) => <PostCard key={p.slug} post={p} />)}</div>
       </article>
       <aside aria-label="Advertisements" className="hidden lg:block">
-        <div className="sticky top-24"><AdsterraSideRail /></div>
+        <div className="sticky top-24"><AdSlot slot={AD_SLOTS.sidebar} format="rectangle" minWidth={1024} className="my-0" /></div>
       </aside>
       </div>
-      <AdsterraAnchor />
     </>
   );
 }

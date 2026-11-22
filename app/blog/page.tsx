@@ -5,7 +5,7 @@ import PageHeader from "@/components/PageHeader";
 import PostCard from "@/components/PostCard";
 import Banner from "@/components/Banner";
 import Reveal from "@/components/Reveal";
-import { AdsterraResponsive, AdsterraRect, AdsterraTower } from "@/components/Adsterra";
+import { AdsterraResponsive } from "@/components/Adsterra";
 import { getAllPosts, getCategories } from "@/lib/posts";
 
 export const metadata: Metadata = pageMeta({ title: "Blog: Frontend Interview Questions and Answers", description: "Interview questions with clear answers and code examples for React, Next.js, JavaScript, TypeScript, Tailwind CSS, GSAP, Framer Motion and Git.", path: "/blog", image: "/images/banners/blog.webp" });
@@ -17,7 +17,6 @@ export default function BlogIndex({ searchParams }: { searchParams: { topic?: st
   const pill = (on: boolean) => `rounded-full border px-4 py-2 text-sm font-medium transition ${on ? "border-ink bg-ink text-sea" : "border-mist bg-white hover:border-teal hover:text-teal"}`;
   return (
     <>
-      <AdsterraTower />
       <PageHeader art="blog" title="Blog" intro="Interview questions with clear answers, code examples and links to go deeper." />
       <div className="mx-auto max-w-6xl px-5 py-12">
         <nav aria-label="Filter by topic" className="flex flex-wrap gap-2">

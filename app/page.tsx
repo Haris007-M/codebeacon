@@ -4,7 +4,7 @@ import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
 import PostCard from "@/components/PostCard";
 import Banner from "@/components/Banner";
-import { AdsterraResponsive, AdsterraRect, AdsterraTower } from "@/components/Adsterra";
+import { AdsterraResponsive } from "@/components/Adsterra";
 import { getAllPosts, slugify } from "@/lib/posts";
 
 const topics = [
@@ -31,7 +31,6 @@ export default function Home() {
   const posts = getAllPosts().slice(0, 6);
   return (
     <>
-      <AdsterraTower />
       <Hero />
       <section className="mx-auto max-w-6xl px-5 py-16 md:py-20">
         <h2 className="text-3xl font-bold">Browse by topic</h2>
@@ -98,7 +97,6 @@ next(); // 2`}</code></pre>
             </div>
           ))}
         </Reveal>
-        <AdsterraRect />
       </section>
 
       <section className="mx-auto mt-20 max-w-3xl px-5">

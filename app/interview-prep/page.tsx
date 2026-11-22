@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Code2, Layers, Braces, Palette, Clapperboard, GitBranch, Check } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/Reveal";
-import { AdsterraResponsive, AdsterraRect, AdsterraTower } from "@/components/Adsterra";
+import { AdsterraResponsive } from "@/components/Adsterra";
 
 export const metadata: Metadata = pageMeta({ title: "Interview Prep", description: "A topic-by-topic checklist for React, Next.js, JavaScript, Tailwind CSS, animation and Git interviews.", path: "/interview-prep", image: "/images/banners/prep.webp" });
 
