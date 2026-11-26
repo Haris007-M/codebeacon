@@ -2,7 +2,7 @@
 
 /** AdSense publisher id (AdSense > Account > Settings). Built in, so the site is connected without any env var;
  *  NEXT_PUBLIC_ADSENSE_CLIENT can override it. */
-export const ADSENSE_CLIENT: string = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-6211805066105040";
+export const ADSENSE_CLIENT: string = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || "ca-pub-8766464646602238";
 
 /**
  * NEXT_PUBLIC_AD_MODE

@@ -21,7 +21,7 @@ The form posts to `app/api/apply/route.ts`.
 Ads are controlled by environment variables (`.env.local` locally, Project Settings > Environment Variables on Vercel). See `.env.example`.
 
 **Phase 1: AdSense review** (`NEXT_PUBLIC_AD_MODE` unset or `review`)
-- The publisher id (`ca-pub-6211805066105040`) is built into `lib/ads.ts`, so no variable is needed. It adds the AdSense script to every page `<head>`, the `google-adsense-account` meta tag and `/ads.txt`. `NEXT_PUBLIC_ADSENSE_CLIENT` can override it.
+- The publisher id (`ca-pub-8766464646602238`) is built into `lib/ads.ts`, so no variable is needed. It adds the AdSense script to every page `<head>`, the `google-adsense-account` meta tag and `/ads.txt`. `NEXT_PUBLIC_ADSENSE_CLIENT` can override it.
 - No Adsterra ads load. Google reviews a clean, content-first site. Ad units are not needed for approval.
 
 **Phase 2: after approval** (`NEXT_PUBLIC_AD_MODE=live`)
